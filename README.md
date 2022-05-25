@@ -4,6 +4,12 @@ Livestreamed development of the Photosphere monolithic backend.
 
 This is backend built with Node.js and JavaScript for uploading and retrieving assets like photos and videos.
 
+This is example code for the book [Rapid Fullstack Development](https://rapidfullstackdevelopment.com/).
+
+The creation of this code was live streamed and [is now hosted on YouTube](https://www.youtube.com/playlist?list=PLQrB0_KjTmHgIsiYYOzAUnH2aA5MtOewI).
+
+[Follow the developer on Twitter](https://twitter.com/codecapers) for updates.
+
 ## Prerequisites
 
 Make sure you have [Node.js](https://nodejs.org/en/) installed.
