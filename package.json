@@ -1,21 +1,21 @@
 {
-  "name": "photosphere-monolithic-backend-livestream",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/index.js",
-  "scripts": {
-    "start": "node src/index.js",
-    "s": "npm run start",
-    "start:dev": "nodemon src/index.js",
-    "sd": "npm run start:dev"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
-  "devDependencies": {
-    "nodemon": "^2.0.16"
-  },
-  "dependencies": {
-    "express": "^5.0.0-beta.1"
-  }
+    "name": "photosphere-monolithic-backend-livestream",
+    "version": "1.0.0",
+    "description": "",
+    "main": "src/index.js",
+    "scripts": {
+        "start": "node src/index.js",
+        "s": "npm run start",
+        "start:dev": "nodemon src/index.js",
+        "sd": "npm run start:dev"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {
+        "nodemon": "^2.0.16"
+    },
+    "dependencies": {
+        "express": "^5.0.0-beta.1"
+    }
 }
