@@ -17,9 +17,6 @@ async function main() {
 
     const db = client.db(dbName);
     const assetCollections = db.collection("assets");
-    const assets = await assetCollections.find().toArray();
-    console.log(`Inital assets:`);
-    console.log(assets);
 
     //
     // Start the REST API.
@@ -27,24 +24,17 @@ async function main() {
     const app = express();
     const port = 3000;
         
-    app.post("/asset", (req, res) => {
+    app.post("/asset", async (req, res) => {
         
+        const assetId = new ObjectId();
         const fileName = req.headers["file-name"];
         const contentType = req.headers["content-type"];
 
-        const localFileName = path.join(__dirname, "../uploads", fileName);
+        const localFileName = path.join(__dirname, "../uploads", assetId.toString());
 
-        const fileWriteStream = fs.createWriteStream(localFileName);
-        req.pipe(fileWriteStream)
-            .on("error", err => {
-                console.error(`Error writing ${localFileName}`);
-                console.error(err);
-                res.sendStatus(500);
-            })
-            .on("finish", () => {
-                console.log(`Done writing ${localFileName}`);
-                res.sendStatus(200);
-            });    
+        await streamToStorage(localFileName, req);    
+
+        res.sendStatus(200);
     });
 
     app.get("/asset", (req, res) => {
@@ -72,3 +62,19 @@ main()
         console.error(err);
         process.exit(1);
     });
+
+//
+// Streams an input stream to local file storage.
+//
+function streamToStorage(localFileName, inputStream) {
+    return new Promise((resolve, reject) => {
+        const fileWriteStream = fs.createWriteStream(localFileName);
+        inputStream.pipe(fileWriteStream)
+            .on("error", err => {
+                reject(err);
+            })
+            .on("finish", () => {
+                resolve();
+            });
+    });
+}
