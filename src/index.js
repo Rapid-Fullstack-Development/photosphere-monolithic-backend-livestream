@@ -1,43 +1,58 @@
 const express = require('express');
-const app = express();
 const path = require("path");
 const fs = require("fs");
-const port = 3000;
 
-app.post("/asset", (req, res) => {
-    
-    const fileName = req.headers["file-name"];
-    const contentType = req.headers["content-type"];
+async function main() {
+    // connect to my database
 
-    const localFileName = path.join(__dirname, "../uploads", fileName);
+    //
+    // Start the REST API.
+    //
+    const app = express();
+    const port = 3000;
+        
+    app.post("/asset", (req, res) => {
+        
+        const fileName = req.headers["file-name"];
+        const contentType = req.headers["content-type"];
 
-    const fileWriteStream = fs.createWriteStream(localFileName);
-    req.pipe(fileWriteStream)
-        .on("error", err => {
-            console.error(`Error writing ${localFileName}`);
-            console.error(err);
-            res.sendStatus(500);
-        })
-        .on("finish", () => {
-            console.log(`Done writing ${localFileName}`);
-            res.sendStatus(200);
-        });    
-});
+        const localFileName = path.join(__dirname, "../uploads", fileName);
 
-app.get("/asset", (req, res) => {
-
-    const fileName = req.query.fileName;
-
-    const localFileName = path.join(__dirname, "../uploads", fileName);
-
-    res.writeHead(200, {
-        "Content-Type": "image/png",
+        const fileWriteStream = fs.createWriteStream(localFileName);
+        req.pipe(fileWriteStream)
+            .on("error", err => {
+                console.error(`Error writing ${localFileName}`);
+                console.error(err);
+                res.sendStatus(500);
+            })
+            .on("finish", () => {
+                console.log(`Done writing ${localFileName}`);
+                res.sendStatus(200);
+            });    
     });
 
-    const fileReadStream = fs.createReadStream(localFileName);
-    fileReadStream.pipe(res);
-});
+    app.get("/asset", (req, res) => {
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
-});
+        const fileName = req.query.fileName;
+
+        const localFileName = path.join(__dirname, "../uploads", fileName);
+
+        res.writeHead(200, {
+            "Content-Type": "image/png",
+        });
+
+        const fileReadStream = fs.createReadStream(localFileName);
+        fileReadStream.pipe(res);
+    });
+
+    app.listen(port, () => {
+        console.log(`Example app listening on port ${port}`);
+    });
+}
+
+main()
+    .catch(err => {
+        console.error(`Something went wrong.`);
+        console.error(err);
+        process.exit(1);
+    });
