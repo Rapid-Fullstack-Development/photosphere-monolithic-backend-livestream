@@ -6,13 +6,18 @@
     "scripts": {
         "start": "node src/index.js",
         "s": "npm run start",
-        "start:dev": "nodemon src/index.js",
-        "sd": "npm run start:dev"
+        "start:dev": "concurrently \"npm run start-db\" \"npm run start-with-dev-db\"",
+        "sd": "npm run start:dev",
+        "start-db": "insta-mongo --db-port=7001 --rest-port=7000",
+        "start-with-dev-db": "cross-env DB_CONNECTION_STRING=mongodb://localhost:7001 nodemon src/index.js"
     },
     "keywords": [],
     "author": "",
     "license": "MIT",
     "devDependencies": {
+        "concurrently": "^7.2.1",
+        "cross-env": "^7.0.3",
+        "insta-mongo": "^0.0.6",
         "nodemon": "^2.0.16"
     },
     "dependencies": {
