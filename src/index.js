@@ -34,6 +34,12 @@ async function main() {
 
         await streamToStorage(localFileName, req);    
 
+        await assetCollections.insertOne({
+            _id: assetId,
+            origFileName: fileName,
+            contentType: contentType,            
+        });
+
         res.sendStatus(200);
     });
 
