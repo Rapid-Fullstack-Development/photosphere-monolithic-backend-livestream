@@ -61,6 +61,14 @@ async function main() {
         fileReadStream.pipe(res);
     });
 
+    app.get("/assets", async (req, res) => {
+
+        const assets = await assetCollections.find().toArray();
+        res.json({
+            asset: assets,
+        });
+    });
+
     app.listen(port, () => {
         console.log(`Example app listening on port ${port}`);
     });

@@ -21,3 +21,9 @@ File-Name: Placeholder.png
 #
 
 GET {{base_url}}/asset?id={{upload_asset_id}}
+
+###
+# Retreive all assets.
+#
+
+GET {{base_url}}/assets
