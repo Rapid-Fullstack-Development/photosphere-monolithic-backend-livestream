@@ -40,17 +40,21 @@ async function main() {
             contentType: contentType,            
         });
 
-        res.sendStatus(200);
+        res.json({
+            assetId: assetId,
+        });
     });
 
-    app.get("/asset", (req, res) => {
+    app.get("/asset", async (req, res) => {
 
-        const fileName = req.query.fileName;
+        const assetId = req.query.id;
 
-        const localFileName = path.join(__dirname, "../uploads", fileName);
+        const localFileName = path.join(__dirname, "../uploads", assetId);
+
+        const asset = await assetCollections.findOne({ _id: new ObjectId(assetId) });
 
         res.writeHead(200, {
-            "Content-Type": "image/png",
+            "Content-Type": asset.contentType,
         });
 
         const fileReadStream = fs.createReadStream(localFileName);
