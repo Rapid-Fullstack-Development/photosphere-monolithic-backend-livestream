@@ -2,6 +2,7 @@ const express = require('express');
 const path = require("path");
 const fs = require("fs");
 const { MongoClient, ObjectId } = require('mongodb');
+const cors = require("cors");
 
 async function main() {
     
@@ -22,6 +23,8 @@ async function main() {
     // Start the REST API.
     //
     const app = express();
+    app.use(cors());
+
     const port = 3000;
         
     app.post("/asset", async (req, res) => {
