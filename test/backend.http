@@ -9,6 +9,8 @@
 POST {{base_url}}/asset
 Content-Type: image/png
 File-Name: Placeholder.png
+Width: 255
+Height: 255
 
 < ./test/Placeholder.png
 

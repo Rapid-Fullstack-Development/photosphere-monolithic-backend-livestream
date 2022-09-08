@@ -33,6 +33,9 @@ async function main() {
         const fileName = req.headers["file-name"];
         const contentType = req.headers["content-type"];
 
+        const width = parseInt(req.headers["width"]);
+        const height = parseInt(req.headers["height"]);
+
         const localFileName = path.join(__dirname, "../uploads", assetId.toString());
 
         await streamToStorage(localFileName, req);    
@@ -40,7 +43,11 @@ async function main() {
         await assetCollections.insertOne({
             _id: assetId,
             origFileName: fileName,
-            contentType: contentType,            
+            contentType: contentType,
+            src: `/asset?id=${assetId}`,
+            thumb: `/asset?id=${assetId}`,
+            width: width,
+            height: height,
         });
 
         res.json({
