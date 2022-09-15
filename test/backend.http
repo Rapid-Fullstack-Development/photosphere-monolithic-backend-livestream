@@ -45,7 +45,20 @@ Height: 5041
 GET {{base_url}}/asset?id={{upload_asset_id}}
 
 ###
-# Retreive all assets.
+# Retreive first page of assets.
 #
 
-GET {{base_url}}/assets
+GET {{base_url}}/assets?skip=0&limit=2
+
+###
+# Retreive seconds page of assets.
+#
+
+GET {{base_url}}/assets?skip=2&limit=2
+
+
+###
+# Retreive third page of assets.
+#
+
+GET {{base_url}}/assets?skip=4&limit=2

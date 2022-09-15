@@ -73,7 +73,13 @@ async function main() {
 
     app.get("/assets", async (req, res) => {
 
-        const assets = await assetCollections.find().toArray();
+        const skip = parseInt(req.query.skip);
+        const limit = parseInt(req.query.limit);
+
+        const assets = await assetCollections.find()
+            .skip(skip)
+            .limit(limit)
+            .toArray();
         res.json({
             assets: assets,
         });
